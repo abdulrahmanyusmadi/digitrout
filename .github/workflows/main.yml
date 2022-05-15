@@ -35,7 +35,7 @@ on:
       - main
 
 env:
-  PETCLINIC_IMAGE: yusmadi/spring-petclinic
+  PETCLINIC_IMAGE: yusmadi/spring-petclinic:v0.1
   RESOURCE_GROUP: digitrout-rg
   CLUSTER_NAME: digitrout-aks
   DEPLOYMENT_MANIFEST_PATH: deployment.yml
