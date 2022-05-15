@@ -52,6 +52,9 @@ jobs:
     # Checks out the repository this file is in
     - uses: actions/checkout@v3
     
+    - name: test
+      run: which az
+    
     # Logs in with your Azure credentials
     - name: Azure login
       uses: azure/login@v1
