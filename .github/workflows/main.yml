@@ -30,6 +30,9 @@ on:
     branches:
       - main
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
 
 env:
   PETCLINIC_IMAGE: yusmadi/sprint-petclinic
