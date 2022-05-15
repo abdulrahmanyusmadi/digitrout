@@ -35,7 +35,6 @@ on:
       - main
 
 env:
-  PETCLINIC_IMAGE: yusmadi/spring-petclinic:0.1
   RESOURCE_GROUP: digitrout-rg
   CLUSTER_NAME: digitrout-aks
   DEPLOYMENT_MANIFEST_PATH: deployment.yml
@@ -72,4 +71,3 @@ jobs:
       with:
         action: deploy
         manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
-        images: ${{ env.PETCLINIC_IMAGE }}
