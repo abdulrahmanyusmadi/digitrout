@@ -35,7 +35,7 @@ on:
       - main
 
 env:
-  PETCLINIC_IMAGE: yusmadi/spring-petclinic:v0.1
+  PETCLINIC_IMAGE: yusmadi/spring-petclinic:0.1
   RESOURCE_GROUP: digitrout-rg
   CLUSTER_NAME: digitrout-aks
   DEPLOYMENT_MANIFEST_PATH: deployment.yml
@@ -52,10 +52,7 @@ jobs:
     steps:
     # Checks out the repository this file is in
     - uses: actions/checkout@v3
-    
-    - name: test image
-      run: docker pull yusmadi/spring-petclinic:0.1
-    
+        
     # Logs in with your Azure credentials
     - name: Azure login
       uses: azure/login@v1
