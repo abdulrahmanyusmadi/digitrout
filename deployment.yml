@@ -1,21 +1,44 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-deployment
-  labels:
-    app: nginx
+  name: petclinic
+  namespace: digitrout
 spec:
-  replicas: 3
+  replicas: 1
   selector:
     matchLabels:
-      app: nginx
+      app: petclinic
   template:
     metadata:
       labels:
-        app: nginx
+        app: petclinic
     spec:
       containers:
-      - name: nginx
-        image: nginx:1.14.2
-        ports:
-        - containerPort: 80
+        - name: petclinic
+          image: yusmadi/spring-petclinic:0.1
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources:
+            limits:
+              cpu: '1'
+              memory: 256Mi
+            requests:
+              cpu: 500m
+              memory: 128Mi
+          imagePullPolicy: IfNotPresent
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: petclinic-service
+  namespace: digitrout
+spec:
+  ports:
+    - name: port80
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  selector:
+    app: petclinic
+  type: LoadBalancer
