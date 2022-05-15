@@ -74,3 +74,4 @@ jobs:
         manifests: ${{ env.DEPLOYMENT_MANIFEST_PATH }}
         images: ${{ env.PETCLINIC_IMAGE }}
         strategy: canary
+        namespace: digitrout
