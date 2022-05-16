@@ -52,3 +52,21 @@ spec:
   selector:
     app: petclinic
   type: LoadBalancer
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: petclinic
+  namespace: digitrout
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: petclinic
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 50
