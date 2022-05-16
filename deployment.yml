@@ -1,0 +1,72 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: petclinic
+  namespace: digitrout
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: petclinic
+  template:
+    metadata:
+      labels:
+        app: petclinic
+    spec:
+      containers:
+        - name: petclinic
+          image: yusmadi/spring-petclinic:0.1
+          ports:
+            - containerPort: 80
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 1
+              memory: 1Gi
+            requests:
+              cpu: 0.5
+              memory: 500Mi
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            httpGet:
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 70
+          readinessProbe:
+            httpGet:
+              port: 8080
+              scheme: HTTP
+            initialDelaySeconds: 70
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: petclinic-service
+  namespace: digitrout
+spec:
+  ports:
+    - name: port80
+      protocol: TCP
+      port: 80
+      targetPort: 8080
+  selector:
+    app: petclinic
+  type: LoadBalancer
+---
+apiVersion: autoscaling/v2beta1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: petclinic
+  namespace: digitrout
+spec:
+  scaleTargetRef:
+    kind: Deployment
+    name: petclinic
+    apiVersion: apps/v1
+  minReplicas: 1
+  maxReplicas: 10
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 50
